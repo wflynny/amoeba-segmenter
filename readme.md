@@ -15,9 +15,10 @@ scheduler.  Other related repositories store the data and results for the
 various applications of this tool.
 
 Related repositories:
-- [[cyst-viability-assay]()] - Validation of this tool and its use to measure
-  A. castellanii Cyst viability via live/dead imaging by Ethidium Homodimer-1
-  (EthD-1) and Calcein-AM staining.
+- [[cyst-viability-assay](https://github.com/wflynny/cyst-viability-assay)] -
+  Validation of this tool and its use to measure A. castellanii Cyst viability
+  via live/dead imaging by Ethidium Homodimer-1 (EthD-1) and Calcein-AM
+  staining.
 - [[amoebicidal-small-molecules]()] - Work in Progress
 
 ## Installation
