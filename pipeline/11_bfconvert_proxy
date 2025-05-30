@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+### SLURM HEADER
+#SBATCH --job-name=bfconvert
+#SBATCH --output=bfconvert-%j.log
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=bill.flynn@jax.org
+
+#SBATCH --account=singlecell
+#SBATCH --partition=batch
+#SBATCH --qos=normal
+#SBATCH --time=3:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4GB
+
+#SBATCH --export=ALL
+### SLURM HEADER
+
+localcores=${SLURM_CPUS_PER_TASK}
+
+cd ${SLURM_SUBMIT_DIR}
+{
+  module load singularity
+} || {
+  module load apptainer
+  # apptainer creates an alias for singularity
+  # so "singularity" as a command should work 
+}
+
+bfconvert="singularity run ${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif bfconvert"
+showinf="singularity run  ${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif showinf"
+
+
+infile="${1}"
+
+if [ -z "${infile}" ]; then
+    echo "must supply a file!" >&2
+    exit 1
+fi
+
+echo "File: ${infile}"
+nseries=$($showinf "$infile" -nopix | grep 'Series count = ' | grep -Eo '[0-9]+')
+echo "N series: $nseries"
+for i in $(seq 0 $((nseries - 1))); 
+do
+  $bfconvert -overwrite -series $i "${infile}" "${infile}_${i}.ome.tiff"
+done

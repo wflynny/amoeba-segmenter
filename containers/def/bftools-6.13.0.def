@@ -1,0 +1,46 @@
+bootstrap: docker
+from: openjdk:11.0.12-jre-slim-bullseye
+
+%help
+    Runs Open Microscopy BFTOOLS
+
+%labels
+    Version 6.13.0
+    Author: OME
+    Maintainer: Bill Flynn (bill.flynn@jax.org)
+
+%environment
+    export PATH="/opt/bftools:/opt/raw2ometiff-0.4.1/bin:/opt/bioformats2raw-0.6.1/bin:$PATH"
+
+%post
+    set -eu
+
+    apt-get update && \
+        apt-get -y upgrade
+    apt-get -y install wget \
+        ca-certificates \
+        libblosc1 \
+        libxtst6 \
+        zip \
+        locales
+
+    rm -rf /var/lib/apt/lists/*
+
+    # locale fix
+    echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+    locale-gen en_US.UTF-8
+
+    mkdir -p /opt/ && cd /opt/
+
+    wget 'https://downloads.openmicroscopy.org/bio-formats/6.13.0/artifacts/bftools.zip'
+
+    unzip bftools.zip && rm bftools.zip
+    rm bftools/*.bat
+
+    wget 'https://github.com/glencoesoftware/bioformats2raw/releases/download/v0.6.1/bioformats2raw-0.6.1.zip'
+    unzip bioformats2raw-0.6.1.zip && rm bioformats2raw-0.6.1.zip
+
+    wget 'https://github.com/glencoesoftware/raw2ometiff/releases/download/v0.4.1/raw2ometiff-0.4.1.zip'
+    unzip raw2ometiff-0.4.1.zip && rm raw2ometiff-0.4.1.zip
