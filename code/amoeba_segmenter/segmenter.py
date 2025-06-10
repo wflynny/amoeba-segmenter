@@ -9,7 +9,7 @@ from skimage.color import label2rgb
 from skimage.exposure import equalize_adapthist
 from skimage.measure import regionprops_table
 
-CAN_PLOT = TRUE
+CAN_PLOT = True
 try:
     import matplotlib.pyplot as plt
     import cmocean as cmo
@@ -17,7 +17,7 @@ try:
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams["figure.facecolor"] = "white"
 except ImportError:
-    CAN_PLOT = FALSE
+    CAN_PLOT = False
 
 
 

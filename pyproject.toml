@@ -1,0 +1,46 @@
+[project]
+name = "amoeba-segmenter"
+version = "0.1.0"
+authors = [
+  { name="Bill Flynn", email="wflynny@gmail.com" },
+  { name="Carrie Flynn", email="carrieanneflynn@gmail.com" },
+]
+description = "Acanthamoeba image segmentation tool from the Kazmierczak Lab at Yale University."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "anndata",
+    "cellpose",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pip",
+    "scikit-image",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "setuptools",
+    "cmocean",
+    "scipy",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff"
+]
+
+[project.urls]
+Homepage = "https://github.com/wflynny/amoeba-segmenter"
+"Bug Tracker" = "https://github.com/wflynny/amoeba-segmenter/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["code"]

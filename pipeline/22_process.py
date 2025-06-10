@@ -3,11 +3,11 @@ import sys
 import argparse
 from pathlib import Path
 
-ROOT_DIR = os.environ.get("AMOEBASEGMENTER_ROOT_DIR", None)
-if not ROOT_DIR:
+CODE_DIR = os.environ.get("AMOEBASEGMENTER_CODE_DIR", None)
+if not CODE_DIR:
     raise Exception("Need to source root config file!")
-ROOT_DIR = Path(ROOT_DIR)
-sys.path.insert(0, str(ROOT_DIR))
+CODE_DIR = Path(CODE_DIR)
+sys.path.insert(0, str(CODE_DIR))
 del sys
 
 from amoeba_segmenter.segmenter import SimpleAmoebaSegmenter

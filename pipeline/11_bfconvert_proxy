@@ -20,16 +20,32 @@
 localcores=${SLURM_CPUS_PER_TASK}
 
 cd ${SLURM_SUBMIT_DIR}
-{
-  module load singularity
-} || {
-  module load apptainer
-  # apptainer creates an alias for singularity
-  # so "singularity" as a command should work 
-}
 
-bfconvert="singularity run ${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif bfconvert"
-showinf="singularity run  ${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif showinf"
+if [ ! -z ${BFTOOLS_PATH} ]; then
+    echo "Local bftools path provided, will try to use instead of apptainer"
+    bfconvert="${BFTOOLS_PATH}/bfconvert"
+    showinf="${BFTOOLS_PATH}/showinf"
+
+    local_found=0
+    if [ -f $bfconvert ]; then
+        local_found=1
+    fi
+fi
+
+if [ $local_found -eq 0 ]; then
+    echo "Local bftools path not found or not provided"
+    echo "Falling back to containerization"
+    {
+        module load singularity
+    } || {
+         module load apptainer
+         # apptainer creates an alias for singularity
+         # so "singularity" as a command should work 
+    }
+    
+    bfconvert="singularity run ${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif bfconvert"
+    showinf="singularity run  ${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif showinf"
+fi
 
 
 infile="${1}"

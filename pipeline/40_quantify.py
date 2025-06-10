@@ -11,7 +11,7 @@ ROOT_DIR = os.environ.get("AMOEBASEGMENTER_ROOT_DIR", None)
 if not ROOT_DIR:
     raise Exception("Need to source root config file!")
 ROOT_DIR = Path(ROOT_DIR)
-sys.path.insert(0, str(ROOT_DIR))
+sys.path.insert(0, str(ROOT_DIR / "code"))
 del sys
 
 from cyst_segmenter.platemap import CANONICAL_WELL_ORDERING, serpentine

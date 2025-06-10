@@ -31,4 +31,4 @@ fi
 
 tiff_file="${1}_${SLURM_ARRAY_TASK_ID}.ome.tiff"
 
-python ${AMOEBASEGMENTER_SCRIPTS_DIR}/process.py "${tiff_file}" "${2}"
+python ${AMOEBASEGMENTER_SCRIPTS_DIR}/22_process.py "${tiff_file}" "${2}"

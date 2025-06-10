@@ -8,7 +8,7 @@ from subprocess import run, PIPE
 series_count_pattern = re.compile("Series count = (\d+)")
 suffix_pattern = re.compile(".*_(\d+).ome.tiff")
 series_grep_cmd = (
-    "singularity run -B /sc "
+    "singularity run "
     "${AMOEBASEGMENTER_ROOT_DIR}/containers/img/bftools-6.13.0.sif "
     "showinf -nopix '{}' | grep 'Series count'"
 )
